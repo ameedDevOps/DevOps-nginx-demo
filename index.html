@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Server Routes</title>
+</head>
+<body>
+    <h1>Welcome to the Web Server Routes Page</h1>
+    <p>This page demonstrates handling various routes and HTTP status codes.</p>
+    <ul>
+        <li><a href="/metrics">/metrics</a> - Will give HTTP status code</li>
+        <li><a href="/team">/team</a> - Will display a JPG image</li>
+        <li><a href="/health">/health</a> - HTTP code 204</li>
+        <li><a href="/error">/error</a> - Error page with HTTP code 500</li>
+        <li><a href="/">/</a> - Redirect to /team with HTTP code 307</li>
+    </ul>
+</body>
+</html>
