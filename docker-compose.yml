@@ -12,7 +12,9 @@ services:
       - "80:80"
 
   monitor:
-    build: ./monitor_server
+    build:
+      context: ./monitor_server
+      dockerfile: Dockerfile
     container_name: monitor-container
     networks:
       - monitor
