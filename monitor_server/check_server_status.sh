@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-URL="http://web-server"
+URL="http://web-server/metrics"
 INTERVAL=30
 LOGFILE="server_status.log"
 RETRY_COUNT=3
