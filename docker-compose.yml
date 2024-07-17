@@ -24,7 +24,7 @@ services:
       - web-server
     volumes:
       - $PWD:/usr/src/app
-    entrypoint: ["/bin/bash", "/mcheck_server_status.sh"]
+    entrypoint: ["/bin/bash", "/check_server_status.sh"]
 
 networks:
   monitor:
