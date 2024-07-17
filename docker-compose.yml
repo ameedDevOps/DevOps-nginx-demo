@@ -25,4 +25,5 @@ services:
 
 networks:
   monitor:
+    name: monitor
     driver: bridge
