@@ -11,8 +11,15 @@ RETRY_INTERVAL=5
 check_status() {
   HTTP_STATUS=$(curl -o /dev/null -s -w "%{http_code}" $URL)
   TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$TIMESTAMP - Status: $HTTP_STATUS" >> $LOGFILE
+  
+  if [ $HTTP_STATUS -eq 000 ]; then
+    echo "$TIMESTAMP - Error: Unable to reach the server at $URL" >> $LOGFILE
+  else
+    echo "$TIMESTAMP - Status: $HTTP_STATUS" >> $LOGFILE
+  fi
+  
   echo "Checked at $TIMESTAMP - Status: $HTTP_STATUS"
+  return $HTTP_STATUS
 }
 
 # Function to retry checking the status in case of failure
@@ -31,7 +38,13 @@ retry_check() {
   done
 
   TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
-  echo "$TIMESTAMP - Status: $status (after $RETRY_COUNT retries)" >> $LOGFILE
+  
+  if [ $status -eq 000 ]; then
+    echo "$TIMESTAMP - Error: Unable to reach the server at $URL (after $RETRY_COUNT retries)" >> $LOGFILE
+  else
+    echo "$TIMESTAMP - Status: $status (after $RETRY_COUNT retries)" >> $LOGFILE
+  fi
+  
   echo "Failed after $RETRY_COUNT attempts. Status: $status"
   return 1
 }
