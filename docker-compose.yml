@@ -22,8 +22,8 @@ services:
       - "8080:80"
     depends_on:
       - web-server
-    volumes:
-      - ./monitor_server:/usr/src/app
+    # volumes:
+    #   - ./monitor_server:/usr/src/app
 
 networks:
   monitor:
