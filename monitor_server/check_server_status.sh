@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Configuration
-URL="http://your.application.server.url"
+URL="http://web-server"
 INTERVAL=30
 LOGFILE="server_status.log"
 RETRY_COUNT=3
