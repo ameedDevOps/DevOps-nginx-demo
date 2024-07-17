@@ -12,9 +12,7 @@ services:
       - "80:80"
 
   monitor:
-    build: 
-      context: ./monitor_server
-      dockerfile: Dockerfile
+    build: ./monitor_server
     container_name: monitor-container
     networks:
       - monitor
@@ -23,7 +21,7 @@ services:
     depends_on:
       - web-server
     volumes:
-      - $PWD:/usr/src/app
+      - ./monitor_server:/usr/src/app
 
 networks:
   monitor:
