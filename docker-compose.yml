@@ -17,7 +17,7 @@ services:
       dockerfile: Dockerfile
     container_name: monitor-container
     networks:
-      - my_network
+      - monitor
     depends_on:
       - web-server
     volumes:
@@ -25,5 +25,5 @@ services:
     entrypoint: ["/bin/bash", "/mcheck_server_status.sh"]
 
 networks:
-  my_network:
+  monitor:
     driver: bridge
