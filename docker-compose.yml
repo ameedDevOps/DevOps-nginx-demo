@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  web-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-container
+    networks:
+      - monitor
+    ports:
+      - "80:80"
+
+  monitor:
+    build: 
+      context: ./monitor_server
+      dockerfile: Dockerfile
+    container_name: monitor-container
+    networks:
+      - my_network
+    depends_on:
+      - web-server
+    volumes:
+      - $PWD:/usr/src/app
+    entrypoint: ["/bin/bash", "/mcheck_server_status.sh"]
+
+networks:
+  my_network:
+    driver: bridge
