@@ -15,7 +15,7 @@ services:
           cpus: "0.25" # Ensures the container is allocated at least 25% of one CPU
           memory: "256M" # Ensures the container is allocated at least 256MB of memory
 
-  monitor:
+  monitor1:
     build:
       context: .
       dockerfile: Dockerfile
@@ -37,7 +37,51 @@ services:
     volumes:
       - /tmp/logs:/tmp/logs
 
+  monitor2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: load-server
+    networks:
+      - load
+    ports:
+      - "8081:80"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50" # Limits the container to use at most 50% of one CPU
+          memory: "512M" # Limits the container to use at most 512MB of memory
+        reservations:
+          cpus: "0.25" # Ensures the container is allocated at least 25% of one CPU
+          memory: "256M" # Ensures the container is allocated at least 256MB of memory
+    depends_on:
+      - web-server
+    volumes:
+      - /tmp/logs:/tmp/logs
+
+  monitor3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: load-server
+    networks:
+      - load
+    ports:
+      - "8082:80"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50" # Limits the container to use at most 50% of one CPU
+          memory: "512M" # Limits the container to use at most 512MB of memory
+        reservations:
+          cpus: "0.25" # Ensures the container is allocated at least 25% of one CPU
+          memory: "256M" # Ensures the container is allocated at least 256MB of memory
+    depends_on:
+      - web-server
+    volumes:
+      - /tmp/logs:/tmp/logs
+
 networks:
-  monitor:
+  load:
     name: load
     driver: bridge
