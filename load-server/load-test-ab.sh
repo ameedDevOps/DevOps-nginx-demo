@@ -1,23 +1,10 @@
 #!/bin/bash
 
 # Configuration
-URL="http://web-server/metrics"
-LOGFILE="server_status.log"
+URL="http://server-url"
+LOGFILE="/tmp/logs/server_status.log"
 RETRY_COUNT=3
 RETRY_INTERVAL=5
-NUM_REQUESTS=1000
-CONCURRENCY=10
-
-# Function to generate load on the server
-generate_load() {
-  TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
-  ab -n $NUM_REQUESTS -c $CONCURRENCY $URL > /dev/null 2>&1
-  if [ $? -eq 0 ]; then
-    echo "$TIMESTAMP - Load generated: $NUM_REQUESTS requests with concurrency $CONCURRENCY" >> $LOGFILE
-  else
-    echo "$TIMESTAMP - Error: Failed to generate load on the server" >> $LOGFILE
-  fi
-}
 
 # Function to check the status of the server
 check_status() {
@@ -63,7 +50,6 @@ retry_check() {
 
 # Main loop to keep generating load and checking the status
 while true; do
-  generate_load
   if ! check_status; then
     retry_check
   fi

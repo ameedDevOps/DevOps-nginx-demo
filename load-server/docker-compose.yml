@@ -1,0 +1,43 @@
+services:
+  web-server:
+    image: nginx:latest
+    container_name: nginx-server
+    networks:
+      - load
+    ports:
+      - "80:80"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50" # Limits the container to use at most 50% of one CPU
+          memory: "512M" # Limits the container to use at most 512MB of memory
+        reservations:
+          cpus: "0.25" # Ensures the container is allocated at least 25% of one CPU
+          memory: "256M" # Ensures the container is allocated at least 256MB of memory
+
+  monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: load-server
+    networks:
+      - load
+    ports:
+      - "8080:80"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.50" # Limits the container to use at most 50% of one CPU
+          memory: "512M" # Limits the container to use at most 512MB of memory
+        reservations:
+          cpus: "0.25" # Ensures the container is allocated at least 25% of one CPU
+          memory: "256M" # Ensures the container is allocated at least 256MB of memory
+    depends_on:
+      - web-server
+    volumes:
+      - /tmp/logs:/tmp/logs
+
+networks:
+  monitor:
+    name: load
+    driver: bridge
